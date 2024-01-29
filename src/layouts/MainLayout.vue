@@ -27,7 +27,7 @@
         <q-item-label
           header
         >
-          Essential Links
+          Меню
         </q-item-label>
 
         <EssentialLink
@@ -41,6 +41,12 @@
     <q-page-container>
       <router-view />
     </q-page-container>
+
+    <div class="full-width flex justify-around q-py-lg bg-grey-5 fixed-bottom" style="border-radius:20px 20px 0 0">
+      <q-btn flat rounded v-for="link in essentialLinks" :key="link.name"  @click="$router.push(link.link)">
+        <q-icon :color="link.link === $route.path ? 'cyan-7' : '' " :name="link.icon" size="35px"/>
+      </q-btn>
+    </div>
   </q-layout>
 </template>
 
@@ -51,21 +57,27 @@ import EssentialLink from 'components/EssentialLink.vue'
 const linksList = [
   {
     title: 'Тесты',
-    caption: 'Какое-то описание',
-    icon: 'school',
-    link: '#/'
+    caption: 'Выбрать тест',
+    icon: 'book',
+    link: '/'
   },
   {
     title: 'Материалы',
-    caption: 'Какое-то описание',
-    icon: 'school',
-    link: '#/materials'
+    caption: 'Уроки для изучения',
+    icon: 'description',
+    link: '/materials'
   },
   {
     title: 'Любимое',
-    caption: 'Какое-то описание',
-    icon: 'school',
-    link: '#/favourites'
+    caption: 'Ваши сохраненные тесты или уроки',
+    icon: 'favorite_border',
+    link: '/favourites'
+  },
+  {
+    title: 'Настройки',
+    caption: 'Настройте шрифт или цвет приложения',
+    icon: 'settings',
+    link: '/settings'
   },
 
 ]
@@ -90,3 +102,7 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="scss" scoped>
+
+</style>

@@ -1,18 +1,75 @@
 <template>
   <q-page class="flex flex-center">
-    <div>
-      <h3> Страница со списком тестов </h3>
-      <div class="q-pa-md" style="max-width: 350px">
-        <q-list bordered separator>
-          <q-item v-for="n in 10" :key="n" clickable v-ripple>
-            <q-item-section>Вопрос номер: {{n}}</q-item-section>
-            <q-item-section>Тема вопроса: {{n}}</q-item-section>
-            <q-item-section>Уровень подготовки: А{{n}}</q-item-section>
-            <q-item-section>Выполнен ли: А{{n}}</q-item-section>
+    <div class="q-px-xs q-pb-xl full-width flex column justify-center">
+      <p>Cтраница со списком тестов</p>
+      <div class="bg-cyan-7 q-pa-lg rounded-borders">
+        <p>Пройденные тесты: </p>
+
+        <q-linear-progress
+            :value="progress"
+            color="white"
+            rounded
+            size="md"
+            class="q-mt-md"
+        />
+        <div>
+          {{progress*10}} / {{10}}
+        </div>
+      </div>
+
+      <div class="q-mt-md" >
+        <q-scroll-area style="height: 400px;">
+          <q-list bordered separator>
+          <q-item
+              v-for="n in 10"
+              :key="n"
+              @click="openDialog(n)"
+              clickable
+              v-ripple
+              class="rounded-borders q-py-lg"
+          >
+            <q-item-section>
+              <div class="q-mb-xs">
+                Название теста №{{n}}
+              </div>
+              <div>
+                Тема
+              </div>
+            </q-item-section>
+
+            <q-item-section class="text-center">
+              <div class="q-mb-xs">
+                А{{n}}
+              </div>
+              <div>
+                <q-icon :color="n%2 ==0 ? 'positive':'negative'" name="quiz" size="25px"/>
+              </div>
+            </q-item-section>
           </q-item>
         </q-list>
+        </q-scroll-area>
       </div>
     </div>
+
+    <Teleport to="body">
+      <q-dialog v-model="openDialogTest">
+        <q-card>
+          <q-card-section>
+            <div class="text-h6"> Тест №{{test.question}}</div>
+          </q-card-section>
+
+          <q-card-section class="q-pt-none">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus sit voluptate voluptas eveniet porro. Rerum blanditiis perferendis totam, ea at omnis vel numquam exercitationem aut, natus minima, porro labore.
+          </q-card-section>
+
+          <q-card-actions align="right">
+            <q-btn flat label="OK" color="primary" v-close-popup />
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
+
+    </Teleport>
+
 
   </q-page>
 </template>
@@ -21,6 +78,23 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'IndexPage'
+  name: 'IndexPage',
+  components: {},
+  data(){
+    return {
+       progress:0.3,
+       openDialogTest: false,
+       test:{
+         question:'',
+         time:'',
+       },
+    }
+  },
+  methods:{
+    openDialog(n){
+      this.openDialogTest = true
+      this.test.question = n
+    },
+  },
 })
 </script>
