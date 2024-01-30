@@ -1,9 +1,8 @@
 <template>
   <q-page class="flex flex-center">
     <div class="q-px-xs q-pb-xl full-width flex column justify-center">
-      <p>Cтраница со списком тестов</p>
-      <div class="bg-cyan-7 q-pa-lg rounded-borders">
-        <p>Пройденные тесты: </p>
+      <div class="bg-primary q-pa-lg rounded-borders">
+        <p class="text-white">Пройденные тесты: </p>
 
         <q-linear-progress
             :value="progress"
@@ -12,7 +11,7 @@
             size="md"
             class="q-mt-md"
         />
-        <div>
+        <div class="text-white">
           {{progress*10}} / {{10}}
         </div>
       </div>
@@ -26,7 +25,7 @@
               @click="openDialog(n)"
               clickable
               v-ripple
-              class="rounded-borders q-py-lg"
+              class="rounded-borders q-py-lg bg-white"
           >
             <q-item-section>
               <div class="q-mb-xs">
