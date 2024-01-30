@@ -1,14 +1,8 @@
 <template>
   <q-page class="flex flex-center">
     <div class="q-px-xs q-pb-xl full-width flex column justify-center">
-<<<<<<< HEAD
-      <p>Cтраница со списком материалов для подготовки</p>
-      <div class="bg-cyan-7 q-pa-lg rounded-borders" >
-        <p>Пройденные материалы: </p>
-=======
       <div class="bg-primary q-pa-lg rounded-borders">
         <p class="text-white">Пройденные материалы: </p>
->>>>>>> 147a024039f94afaf3d9f191b6ecb3167d355847
 
         <q-linear-progress
             :value="progress"

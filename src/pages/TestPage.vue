@@ -22,7 +22,6 @@
       Ваш результат: {{rightAnswers}} / {{questions.length}}
     </div>
   </div>
-
 </template>
 
 <script>
@@ -31,23 +30,40 @@ import {defineComponent} from "vue";
 //в целом вместе с номером тест можно передавать и вопросы
 const questions = [
   {
-    question: "ЛУчший ЯП?",
-    answers:  ['Java','JavaScript','Mocha', 'Python'],
+    question: "Choose the correct verb form in the present simple tense: \n He usually _______ breakfast at 7 am.",
+    answers:  ['eat','eating','ate', 'eats'],
     correctAnswer:  1
   },
   {
-    question: "Не ЛУчший ЯП?",
-    answers:  ['Java','JavaScript','Huskell', 'Python'],
-    correctAnswer: 3
-  },
-  {
-    question: "Возможно ЛУчший ЯП?",
-    answers:  ['Java','Pascal','Mocha', 'Python'],
+    question: "Choose the correct verb form in the present continuous tense:\nThey _______ a movie right now.",
+    answers:  ['watch','watching','watched', 'watches'],
     correctAnswer: 2
   },
   {
-    question: "Явно не лучший ЛУчший ЯП?",
-    answers:  ['С++','JavaScript','Mocha', 'Python'],
+    question: "Choose the correct verb form in the past simple tense:\nWe _______ to the beach last weekend.",
+    answers:  ['go','going','went', 'goes'],
+    correctAnswer: 3
+  },
+  {
+    question: "Choose the correct verb form in the future continuous tense:\nThey _______ a party on Saturday evening.",
+    answers:  ['plan','planning','planned', 'will be planning'],
+    correctAnswer: 4
+  },
+  {
+    question: "Choose the correct verb form in the present perfect tense:\nShe _______ the book already.",
+    answers:  ['read','reading','reads', 'has read'],
+    correctAnswer: 4
+  }
+  ,
+  {
+    question: "Choose the correct verb form in the future perfect tense:\nBy next year, I _______ the language.",
+    answers:  ['learn','learning','will learn', 'would learn'],
+    correctAnswer: 3
+  }
+  ,
+  {
+    question: "Choose the correct verb form in the present perfect continuous tense:\nWe _______ for six hours.",
+    answers:  ['study','studying','studied', 'have been studying'],
     correctAnswer: 4
   }
 ]
