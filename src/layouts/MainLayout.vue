@@ -56,16 +56,16 @@ import EssentialLink from 'components/EssentialLink.vue'
 
 const linksList = [
   {
-    title: 'Тесты',
-    caption: 'Выбрать тест',
+    title: 'Материалы',
+    caption: 'Уроки для изучения',
     icon: 'book',
     link: '/'
   },
   {
-    title: 'Материалы',
-    caption: 'Уроки для изучения',
+    title: 'Тесты',
+    caption: 'Выбрать тест',
     icon: 'description',
-    link: '/materials'
+    link: '/tests'
   },
   {
     title: 'Любимое',

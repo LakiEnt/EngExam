@@ -19,33 +19,33 @@
       <div class="q-mt-md" >
         <q-scroll-area style="height: 400px;">
           <q-list bordered separator>
-          <q-item
-              v-for="n in 10"
-              :key="n"
-              @click="openDialog(n)"
-              clickable
-              v-ripple
-              class="rounded-borders q-py-lg bg-white"
-          >
-            <q-item-section>
-              <div class="q-mb-xs">
-                Название теста №{{n}}
-              </div>
-              <div>
-                Тема
-              </div>
-            </q-item-section>
+            <q-item
+                v-for="n in 10"
+                :key="n"
+                @click="openDialog(n)"
+                clickable
+                v-ripple
+                class="rounded-borders q-py-lg bg-white"
+            >
+              <q-item-section>
+                <div class="q-mb-xs">
+                  Название урока №{{n}}
+                </div>
+                <div>
+                  Тема
+                </div>
+              </q-item-section>
 
-            <q-item-section class="text-center">
-              <div class="q-mb-xs">
-                А{{n}}
-              </div>
-              <div>
-                <q-icon :color="n%2 ==0 ? 'positive':'negative'" name="quiz" size="25px"/>
-              </div>
-            </q-item-section>
-          </q-item>
-        </q-list>
+              <q-item-section class="text-center">
+                <div class="q-mb-xs">
+                  А{{n}}
+                </div>
+                <div>
+                  <q-icon :color="n%2 ==0 ? 'positive':'negative'" name="quiz" size="25px"/>
+                </div>
+              </q-item-section>
+            </q-item>
+          </q-list>
         </q-scroll-area>
       </div>
     </div>
@@ -54,7 +54,7 @@
       <q-dialog v-model="openDialogTest">
         <q-card>
           <q-card-section>
-            <div class="text-h6"> Тест №{{test.question}}</div>
+            <div class="text-h6"> Урок №{{test.question}}</div>
           </q-card-section>
 
           <q-card-section class="q-pt-none">
@@ -62,7 +62,6 @@
           </q-card-section>
 
           <q-card-actions align="right">
-            <q-btn flat label="Перейти к тесту" @click="$router.push('/testPage')"  color="primary" v-close-popup />
             <q-btn flat label="OK" color="primary" v-close-popup />
           </q-card-actions>
         </q-card>
@@ -78,16 +77,15 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'IndexPage',
-  components: {},
+  name: 'MaterialsPage',
   data(){
     return {
-       progress:0.3,
-       openDialogTest: false,
-       test:{
-         question:'',
-         time:'',
-       },
+      progress:0.3,
+      openDialogTest: false,
+      test:{
+        question:'',
+        time:'',
+      },
     }
   },
   methods:{
@@ -96,5 +94,6 @@ export default defineComponent({
       this.test.question = n
     },
   },
+
 })
 </script>

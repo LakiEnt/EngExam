@@ -19,33 +19,34 @@
       <div class="q-mt-md" >
         <q-scroll-area style="height: 400px;">
           <q-list bordered separator>
-            <q-item
-                v-for="n in 10"
-                :key="n"
-                @click="openDialog(n)"
-                clickable
-                v-ripple
-                class="rounded-borders q-py-lg bg-white"
-            >
-              <q-item-section>
-                <div class="q-mb-xs">
-                  Название урока №{{n}}
-                </div>
-                <div>
-                  Тема
-                </div>
-              </q-item-section>
+          <q-item
+              v-for="(material, index) in materials"
+              :key="material.subject"
+              @click="openDialog(index+1)"
+              clickable
+              v-ripple
+              class="rounded-borders q-py-lg bg-white"
+          >
+            <q-item-section>
+              <div class="q-mb-xs">
 
-              <q-item-section class="text-center">
-                <div class="q-mb-xs">
-                  А{{n}}
-                </div>
-                <div>
-                  <q-icon :color="n%2 ==0 ? 'positive':'negative'" name="quiz" size="25px"/>
-                </div>
-              </q-item-section>
-            </q-item>
-          </q-list>
+                Название урока №{{index+1}}
+              </div>
+              <div>
+                Тема: {{ material.subject }}
+              </div>
+            </q-item-section>
+
+            <q-item-section class="text-center">
+              <div class="q-mb-xs">
+                {{ material.level }}
+              </div>
+              <div>
+                <q-icon :color="material.isFinished ? 'positive':'negative'" name="quiz" size="25px"/>
+              </div>
+            </q-item-section>
+          </q-item>
+        </q-list>
         </q-scroll-area>
       </div>
     </div>
@@ -54,14 +55,16 @@
       <q-dialog v-model="openDialogTest">
         <q-card>
           <q-card-section>
-            <div class="text-h6"> Урок №{{test.question}}</div>
+            <div class="text-h6"> Урок №</div>
           </q-card-section>
 
           <q-card-section class="q-pt-none">
+            {material.text} <span> это передать через функцию</span>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus sit voluptate voluptas eveniet porro. Rerum blanditiis perferendis totam, ea at omnis vel numquam exercitationem aut, natus minima, porro labore.
           </q-card-section>
 
           <q-card-actions align="right">
+            <q-btn flat label="Перейти к тесту (сделать через кнопку функцию котрая передавала бы данные о тесте)" @click="$router.push('/testPage')"  color="primary" v-close-popup />
             <q-btn flat label="OK" color="primary" v-close-popup />
           </q-card-actions>
         </q-card>
@@ -75,25 +78,31 @@
 
 <script>
 import { defineComponent } from 'vue'
-
 export default defineComponent({
-  name: 'MaterialsPage',
+  name: 'IndexPage',
+  components: {},
   data(){
     return {
-      progress:0.3,
-      openDialogTest: false,
-      test:{
-        question:'',
-        time:'',
-      },
+       progress:0.3,
+       openDialogTest: false,
+       materials: null,
+
     }
   },
   methods:{
-    openDialog(n){
+    openDialog(){
       this.openDialogTest = true
-      this.test.question = n
     },
-  },
+    // проблема: на телефоне не передается файл api
+    async getMaterials() {
+      const response = await fetch('src/api.json')
+      const data = await response.json();
+      this.materials = data.materials
 
+    }
+  },
+  created() {
+    this.getMaterials()
+  }
 })
 </script>
