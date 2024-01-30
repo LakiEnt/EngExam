@@ -12,7 +12,7 @@
             class="q-mt-md"
         />
         <div class="text-white">
-          {{progress*10}} / {{10}}
+          {{progress*10}} / {{materials.length}}
         </div>
       </div>
 
@@ -22,7 +22,7 @@
           <q-item
               v-for="(material, index) in materials"
               :key="material.subject"
-              @click="openDialog(index+1)"
+              @click="openDialog(index)"
               clickable
               v-ripple
               class="rounded-borders q-py-lg bg-white"
@@ -42,7 +42,7 @@
                 {{ material.level }}
               </div>
               <div>
-                <q-icon :color="material.isFinished ? 'positive':'negative'" name="quiz" size="25px"/>
+                <q-icon @click="material.isFinished = !material.isFinished " :color="material.isFinished ? 'positive':'negative'" name="quiz" size="25px"/>
               </div>
             </q-item-section>
           </q-item>
@@ -55,7 +55,7 @@
       <q-dialog v-model="openDialogTest">
         <q-card>
           <q-card-section>
-            <div class="text-h6"> Урок №</div>
+            <div class="text-h6"> Урок №{{testIndex}}</div>
           </q-card-section>
 
           <q-card-section class="q-pt-none">
@@ -64,7 +64,7 @@
           </q-card-section>
 
           <q-card-actions align="right">
-            <q-btn flat label="Перейти к тесту (сделать через кнопку функцию котрая передавала бы данные о тесте)" @click="$router.push('/testPage')"  color="primary" v-close-popup />
+            <q-btn flat label="Перейти к тесту (сделать через кнопку функцию котрая передавала бы данные о тесте)" @click="$router.push(`/testPage?materialNumber=${testIndex}`)"  color="primary" v-close-popup />
             <q-btn flat label="OK" color="primary" v-close-popup />
           </q-card-actions>
         </q-card>
@@ -77,6 +77,178 @@
 </template>
 
 <script>
+const materials =  [
+    {
+      "subject": "grammar",
+      "level": "A1",
+      "isFinished": true,
+      "favourite": false,
+      "text": "some random text maybe Lorem Ipulum",
+      "tests": [
+        {
+          "isFinished": false,
+          "nameOfTest": "times test",
+          "questions":[
+            {
+              question: "ЛУчший ЯП?",
+              answers:  ['Java','JavaScript','Mocha', 'Python'],
+              correctAnswer:  1
+            },
+            {
+              question: "Не ЛУчший ЯП?",
+              answers:  ['Java','JavaScript','Huskell', 'Python'],
+              correctAnswer: 3
+            },
+            {
+              question: "Возможно ЛУчший ЯП?",
+              answers:  ['Java','Pascal','Mocha', 'Python'],
+              correctAnswer: 2
+            },
+            {
+              question: "Явно не лучший ЛУчший ЯП?",
+              answers:  ['С++','JavaScript','Mocha', 'Python'],
+              correctAnswer: 4
+            }
+          ]
+        }
+      ]
+    },
+    // {
+    //   "subject": "times",
+    //   "level": "B1",
+    //   "isFinished": false,
+    //   "favourite": false,
+    //   "text": "some random text maybe Lorem Ipulum",
+    //   "test": [
+    //     {
+    //       "nameOfTest": "times test",
+    //       "questions": [
+    //         {
+    //           "questionText": "Не ЛУчший ЯП?",
+    //           "answers":  ["Java","JavaScript","Huskell", "Python"],
+    //           "correctAnswer": 3
+    //         }
+    //       ]
+    //     }
+    //   ]
+    // },
+    // {
+    //   "subject": "verbs",
+    //   "level": "C2",
+    //   "isFinished": true,
+    //   "favourite": false,
+    //   "text": "some random text maybe Lorem Ipulum",
+    //   "test": [
+    //     {
+    //       "nameOfTest": "verbs test",
+    //       "questions": [
+    //         {
+    //           "questionText": "Не ЛУчший ЯП?",
+    //           "answers":  ["Java","JavaScript","Huskell", "Python"],
+    //           "correctAnswer": 3
+    //         }
+    //       ]
+    //     }
+    //   ]
+    // },
+    // {
+    //   "subject": "times",
+    //   "level": "B2",
+    //   "isFinished": true,
+    //   "favourite": false,
+    //   "text": "some random text maybe Lorem Ipulum",
+    //   "test": [
+    //     {
+    //       "nameOfTest": "grammar test",
+    //       "questions": [
+    //         {
+    //           "questionText": "Не ЛУчший ЯП?",
+    //           "answers":  ["Java","JavaScript","Huskell", "Python"],
+    //           "correctAnswer": 3
+    //         }
+    //       ]
+    //     }
+    //   ]
+    // },
+    // {
+    //   "subject": "grammar",
+    //   "level": "A1",
+    //   "isFinished": false,
+    //   "favourite": false,
+    //   "text": "some random text maybe Lorem Ipulum",
+    //   "test": [
+    //     {
+    //       "nameOfTest": "grammar test",
+    //       "questions": [
+    //         {
+    //           "questionText": "Не ЛУчший ЯП?",
+    //           "answers":  ["Java","JavaScript","Huskell", "Python"],
+    //           "correctAnswer": 3
+    //         }
+    //       ]
+    //     }
+    //   ]
+    // },
+    // {
+    //   "subject": "grammar",
+    //   "level": "A1",
+    //   "isFinished": true,
+    //   "favourite": false,
+    //   "text": "some random text maybe Lorem Ipulum",
+    //   "test": [
+    //     {
+    //       "nameOfTest": "grammar test",
+    //       "questions": [
+    //         {
+    //           "questionText": "Не ЛУчший ЯП?",
+    //           "answers":  ["Java","JavaScript","Huskell", "Python"],
+    //           "correctAnswer": 3
+    //         }
+    //       ]
+    //     }
+    //   ]
+    // },
+    // {
+    //   "subject": "grammar",
+    //   "level": "A1",
+    //   "isFinished": true,
+    //   "favourite": false,
+    //   "text": "some random text maybe Lorem Ipulum",
+    //   "test": [
+    //     {
+    //       "nameOfTest": "grammar test",
+    //       "questions": [
+    //         {
+    //           "questionText": "Не ЛУчший ЯП?",
+    //           "answers":  ["Java","JavaScript","Huskell", "Python"],
+    //           "correctAnswer": 3
+    //         }
+    //       ]
+    //     }
+    //   ]
+    // },
+    // {
+    //   "subject": "grammar",
+    //   "level": "A1",
+    //   "isFinished": true,
+    //   "favourite": false,
+    //   "text": "some random text maybe Lorem Ipulum",
+    //   "test": [
+    //     {
+    //       "nameOfTest": "grammar test",
+    //       "questions": [
+    //         {
+    //           "questionText": "Не ЛУчший ЯП?",
+    //           "answers":  ["Java","JavaScript","Huskell", "Python"],
+    //           "correctAnswer": 3
+    //         }
+    //       ]
+    //     }
+    //   ]
+    // }
+  ]
+
+
 import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'IndexPage',
@@ -86,20 +258,46 @@ export default defineComponent({
        progress:0.3,
        openDialogTest: false,
        materials: null,
-
+       initMaterials: materials,
+       testIndex: 0,
     }
   },
   methods:{
-    openDialog(){
+    openDialog(n){
       this.openDialogTest = true
+      this.testIndex = n
     },
     // проблема: на телефоне не передается файл api
     async getMaterials() {
-      const response = await fetch('src/api.json')
-      const data = await response.json();
-      this.materials = data.materials
+      // const response = await fetch('src/api.json')
+      // const data = await response.json();
+      // this.materials = data.materials
+
+      if(!localStorage.getItem('materials')){
+        console.log('no materials in local storage')
+        localStorage.setItem("materials", JSON.stringify(this.initMaterials));
+        this.materials = this.initMaterials
+      }
+      else {
+        console.log('materials in local storage')
+        this.materials = JSON.parse(localStorage.getItem('materials'))
+      }
+
+      for (let material of this.materials) {
+        this.progress += material.isFinished ? 1 : 0
+      }
+      this.progress = (this.progress / 10).toFixed(1)
 
     }
+  },
+  watch: {
+    materials:{
+      handler(val, newVal) {
+        console.log('materials setted by watcher local storage')
+        localStorage.setItem("materials", JSON.stringify(val));
+      },
+      deep: true
+    },
   },
   created() {
     this.getMaterials()

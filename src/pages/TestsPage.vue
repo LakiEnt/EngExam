@@ -1,18 +1,25 @@
 <template>
   <q-page class="flex flex-center">
     <div class="q-px-xs q-pb-xl full-width flex column justify-center">
-      <div class="bg-primary q-pa-lg rounded-borders">
-        <p class="text-white">Пройденные тесты: </p>
+      <div class="row justify-between">
+        <div class="col-12 bg-primary q-pa-lg rounded-borders">
+          <p class="text-white">Пройденные тесты: </p>
 
-        <q-linear-progress
-            :value="progress"
-            color="white"
-            rounded
-            size="md"
-            class="q-mt-md"
-        />
-        <div class="text-white">
-          {{progress*10}} / {{10}}
+          <q-linear-progress
+              :value="progress"
+              color="white"
+              rounded
+              size="md"
+              class="q-mt-md"
+          />
+          <div class="text-white">
+            {{progress*10}} / {{10}}
+          </div>
+        </div>
+
+        <div class="col-8 bg-primary rounded-borders q-pa-lg q-mt-md flex justify-end">
+          <p class="text-white">Выбрать случайный тест: </p>
+          <q-btn icon="arrow_forward" color="white" outline round @click="pushToRandomTest"/>
         </div>
       </div>
 
@@ -80,7 +87,8 @@ export default defineComponent({
   name: 'MaterialsPage',
   data(){
     return {
-      progress:0.3,
+      materials: null,
+      progress: 0,
       openDialogTest: false,
       test:{
         question:'',
@@ -93,7 +101,52 @@ export default defineComponent({
       this.openDialogTest = true
       this.test.question = n
     },
+    pushToRandomTest(){
+      const max = this.materials.length
+      const min = 0
+      const minCeiled = Math.ceil(min);
+      const maxFloored = Math.floor(max);
+
+      const randomTestIndex = Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled);
+      this.$router.push(`/testPage?materialNumber=${randomTestIndex}`)
+    },
+    async getMaterials() {
+      console.log(123)
+      // const response = await fetch('src/api.json')
+      // const data = await response.json();
+      // this.materials = data.materials
+
+      if(!localStorage.getItem('materials')){
+        console.log('no materials in local storage')
+        localStorage.setItem("materials", JSON.stringify(this.initMaterials));
+        this.materials = this.initMaterials
+      }
+      else {
+        console.log('materials in local storage')
+        this.materials = JSON.parse(localStorage.getItem('materials'))
+      }
+
+      for (let material of this.materials) {
+        this.progress += material.isFinished ? 1 : 0
+      }
+      this.progress = (this.progress / 10).toFixed(1)
+
+    },
   },
+  watch: {
+    materials:{
+      handler(val, newVal) {
+        console.log('materials setted by watcher local storage')
+        localStorage.setItem("materials", JSON.stringify(val));
+      },
+      deep: true
+    },
+  },
+  created() {
+    this.getMaterials()
+
+    //progress test
+  }
 
 })
 </script>
