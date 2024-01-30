@@ -6,7 +6,7 @@
       "isFinished": true,
       "favourite": false,
       "text": "some random text maybe Lorem Ipulum",
-      "tests": [
+      "test": [
         {
           "nameOfTest": "grammar test",
           "questions": [
@@ -14,7 +14,7 @@
               "questionText": "Не ЛУчший ЯП?",
               "answers":  ["Java","JavaScript","Huskell", "Python"],
               "correctAnswer": 3
-            }
+            },
           ]
         }
       ]
