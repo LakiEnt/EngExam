@@ -6,17 +6,16 @@
             v-model="tab"
             dense
             align="left"
-            class="bg-cyan-7 text-white shadow-2 rounded-borders"
+            class="bg-primary text-white shadow-2 rounded-borders"
             style="max-width: fit-content"
             :breakpoint="0"
         >
-          <q-tab class="q-px-xl" name="mails">Тесты</q-tab>
-          <q-tab class="q-px-xl" name="alarms"  >Уроки</q-tab>
+          <q-tab class="q-px-xl q-px-md q-py-sm" name="tests">Тесты</q-tab>
+          <q-tab class="q-px-xl q-px-md q-py-sm" name="materials">Уроки</q-tab>
         </q-tabs>
 
         <q-tab-panels  class="rounded-borders" swipeable v-model="tab" animated>
-          <q-tab-panel  name="mails">
-            <div class="text-h6">Тесты</div>
+          <q-tab-panel name="tests">
             <div class="q-mt-md" >
               <q-scroll-area style="height: 500px;">
                 <q-list bordered separator>
@@ -51,8 +50,7 @@
 
           </q-tab-panel>
 
-          <q-tab-panel name="alarms">
-            <div class="text-h6">Уроки</div>
+          <q-tab-panel name="materials">
             <div class="q-mt-md" >
               <q-scroll-area style="height: 500px">
                 <q-list bordered separator>
@@ -96,7 +94,7 @@ export default defineComponent({
   name: 'FavouritesPage',
   data(){
     return{
-      tab: 'mails',
+      tab: 'tests',
     }
   }
 })

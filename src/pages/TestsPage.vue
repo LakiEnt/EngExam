@@ -1,9 +1,8 @@
 <template>
   <q-page class="flex flex-center">
     <div class="q-px-xs q-pb-xl full-width flex column justify-center">
-      <p>Cтраница со списком тестов</p>
-      <div class="bg-cyan-7 q-pa-lg rounded-borders">
-        <p>Пройденные тесты: </p>
+      <div class="bg-primary q-pa-lg rounded-borders">
+        <p class="text-white">Пройденные тесты: </p>
 
         <q-linear-progress
             :value="progress"
@@ -12,7 +11,7 @@
             size="md"
             class="q-mt-md"
         />
-        <div>
+        <div class="text-white">
           {{progress*10}} / {{10}}
         </div>
       </div>
@@ -20,33 +19,33 @@
       <div class="q-mt-md" >
         <q-scroll-area style="height: 400px;">
           <q-list bordered separator>
-          <q-item
-              v-for="n in 10"
-              :key="n"
-              @click="openDialog(n)"
-              clickable
-              v-ripple
-              class="rounded-borders q-py-lg"
-          >
-            <q-item-section>
-              <div class="q-mb-xs">
-                Название теста №{{n}}
-              </div>
-              <div>
-                Тема
-              </div>
-            </q-item-section>
+            <q-item
+                v-for="n in 10"
+                :key="n"
+                @click="openDialog(n)"
+                clickable
+                v-ripple
+                class="rounded-borders q-py-lg bg-white"
+            >
+              <q-item-section>
+                <div class="q-mb-xs">
+                  Название урока №{{n}}
+                </div>
+                <div>
+                  Тема
+                </div>
+              </q-item-section>
 
-            <q-item-section class="text-center">
-              <div class="q-mb-xs">
-                А{{n}}
-              </div>
-              <div>
-                <q-icon :color="n%2 ==0 ? 'positive':'negative'" name="quiz" size="25px"/>
-              </div>
-            </q-item-section>
-          </q-item>
-        </q-list>
+              <q-item-section class="text-center">
+                <div class="q-mb-xs">
+                  А{{n}}
+                </div>
+                <div>
+                  <q-icon :color="n%2 ==0 ? 'positive':'negative'" name="quiz" size="25px"/>
+                </div>
+              </q-item-section>
+            </q-item>
+          </q-list>
         </q-scroll-area>
       </div>
     </div>
@@ -55,7 +54,7 @@
       <q-dialog v-model="openDialogTest">
         <q-card>
           <q-card-section>
-            <div class="text-h6"> Тест №{{test.question}}</div>
+            <div class="text-h6"> Урок №{{test.question}}</div>
           </q-card-section>
 
           <q-card-section class="q-pt-none">
@@ -78,16 +77,15 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'IndexPage',
-  components: {},
+  name: 'MaterialsPage',
   data(){
     return {
-       progress:0.3,
-       openDialogTest: false,
-       test:{
-         question:'',
-         time:'',
-       },
+      progress:0.3,
+      openDialogTest: false,
+      test:{
+        question:'',
+        time:'',
+      },
     }
   },
   methods:{
@@ -96,5 +94,6 @@ export default defineComponent({
       this.test.question = n
     },
   },
+
 })
 </script>
