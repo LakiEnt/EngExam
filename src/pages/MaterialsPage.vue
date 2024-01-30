@@ -2,7 +2,7 @@
   <q-page class="flex flex-center">
     <div class="q-px-xs q-pb-xl full-width flex column justify-center">
       <p>Cтраница со списком материалов для подготовки</p>
-      <div class="bg-cyan-7 q-pa-lg rounded-borders">
+      <div class="bg-cyan-7 q-pa-lg rounded-borders" >
         <p>Пройденные материалы: </p>
 
         <q-linear-progress
@@ -98,3 +98,8 @@ export default defineComponent({
 
 })
 </script>
+
+<style>
+
+
+</style>
