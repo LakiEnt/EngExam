@@ -4,7 +4,6 @@
       <div class="row justify-between">
         <div class="col-12 bg-primary q-pa-lg rounded-borders">
           <p class="text-white">Пройденные тесты: </p>
-
           <q-linear-progress
               :value="progress/10"
               color="white"
@@ -106,12 +105,6 @@ export default defineComponent({
         console.log('materials in local storage')
         this.materials = JSON.parse(localStorage.getItem('materials'))
       }
-
-      for (let material of this.materials) {
-        this.progress += material.isFinished ? 1 : 0
-      }
-      this.progress = (this.progress / 10).toFixed(1)
-
     },
   },
   watch: {
@@ -136,11 +129,13 @@ export default defineComponent({
         'level': index.level
       }
       if(index.tests[0].isFinished) {
-        this.progress+=1
+        this.progress = this.progress + 1
+        console.log(this.progress, 'indexxxxx')
       }
-      this.progress = (this.progress / 10).toFixed(1)
       this.tests.push(test)
     }
+    this.progress = (this.progress / 10).toFixed(1)
+
     //progress test
   }
 

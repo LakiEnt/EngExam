@@ -292,7 +292,7 @@ const materials =  [
     {
       "subject": "verbs",
       "level": "C2",
-      "isFinished": true,
+      "isFinished": false,
       "favourite": false,
       "text": "some random text maybe Lorem Ipulum",
       "tests": [
@@ -311,7 +311,7 @@ const materials =  [
     {
       "subject": "times",
       "level": "B2",
-      "isFinished": true,
+      "isFinished": false,
       "favourite": false,
       "text": "some random text maybe Lorem Ipulum",
       "tests": [
@@ -349,7 +349,7 @@ const materials =  [
     {
       "subject": "grammar",
       "level": "A1",
-      "isFinished": true,
+      "isFinished": false,
       "favourite": false,
       "text": "some random text maybe Lorem Ipulum",
       "tests": [
@@ -368,7 +368,7 @@ const materials =  [
     {
       "subject": "grammar",
       "level": "A1",
-      "isFinished": true,
+      "isFinished": false,
       "favourite": false,
       "text": "some random text maybe Lorem Ipulum",
       "tests": [
@@ -387,7 +387,7 @@ const materials =  [
     {
       "subject": "grammar",
       "level": "A1",
-      "isFinished": true,
+      "isFinished": false,
       "favourite": false,
       "text": "some random text maybe Lorem Ipulum",
       "tests": [

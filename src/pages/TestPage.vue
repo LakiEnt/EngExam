@@ -102,6 +102,7 @@ export default defineComponent({
       }
       if(this.rightAnswers === this.questions.length){
         this.materials[this.numberMaterial].tests[0].isFinished = true
+        this.materials[this.numberMaterial].isFinished = true
       }
     },
     async getMaterials() {
