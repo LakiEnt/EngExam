@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="lHh Lpr lff">
     <q-header elevated>
       <q-toolbar>
         <q-btn
@@ -42,12 +42,13 @@
       <router-view />
     </q-page-container>
 
-    <div class="full-width flex justify-around q-py-lg fixed-bottom bg-white" style="border-radius:20px 20px 0 0">
-      <q-btn flat rounded v-for="link in essentialLinks" :key="link.name"  @click="$router.push(link.link)">
-        <q-icon :color="link.link === $route.path ? 'primary' : '' " :name="link.icon" size="35px"/>
-      </q-btn>
-    </div>
+
   </q-layout>
+  <div class="full-width flex justify-around q-py-lg fixed-bottom bg-white" style="border-radius:20px 20px 0 0">
+    <q-btn flat rounded v-for="link in essentialLinks" :key="link.name"  @click="$router.push(link.link)">
+      <q-icon :color="link.link === $route.path ? 'primary' : '' " :name="link.icon" size="35px"/>
+    </q-btn>
+  </div>
 </template>
 
 <script>

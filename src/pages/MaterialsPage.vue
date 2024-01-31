@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex flex-center">
-    <div class="q-px-xs q-pb-xl full-width flex column justify-center">
-      <div class="bg-primary q-pa-lg rounded-borders">
+    <div class=" q-pb-xl full-width flex column justify-center">
+      <div class="bg-primary q-mx-md q-pa-lg rounded-borders" >
         <p class="text-white">Пройденные материалы: </p>
 
         <q-linear-progress
@@ -17,32 +17,36 @@
       </div>
 
       <div class="q-mt-md" >
-        <q-scroll-area style="height: 400px;">
-          <q-list bordered separator>
+        <q-scroll-area class="q-pa-md"  style="height: 400px;">
+          <q-list separator>
+
           <q-item
               v-for="(material, index) in materials"
               :key="material.subject"
               @click="openDialog(index)"
               clickable
               v-ripple
-              class="rounded-borders q-py-lg bg-white"
+              class="rounded-borders q-py-xs q-mb-md bg-white"
           >
-            <q-item-section>
-              <div class="q-mb-xs">
+            <q-item-section class="">
+              <div class="row items-center">
+                <div class="col-10">
+                  <div class="q-mb-xs">
+                    Название урока №{{index+1}}
+                  </div>
+                  <div>
+                    Тема: {{ material.subject }}
+                  </div>
+                </div>
 
-                Название урока №{{index+1}}
-              </div>
-              <div>
-                Тема: {{ material.subject }}
-              </div>
-            </q-item-section>
-
-            <q-item-section class="text-center">
-              <div class="q-mb-xs">
-                {{ material.level }}
-              </div>
-              <div>
-                <q-icon @click="material.isFinished = !material.isFinished " :color="material.isFinished ? 'positive':'negative'" name="quiz" size="25px"/>
+                <div class="col-2">
+                  <div class="q-mb-xs">
+                    {{ material.level }}
+                  </div>
+                  <div>
+                    <q-icon :color="material.isFinished ? 'positive':'negative'" name="quiz" size="25px"/>
+                  </div>
+                </div>
               </div>
             </q-item-section>
           </q-item>
@@ -53,19 +57,21 @@
 
     <Teleport to="body">
       <q-dialog v-model="openDialogTest">
-        <q-card>
-          <q-card-section>
-            <div class="text-h6"> Урок №{{testIndex}}</div>
+        <q-card class="q-pa-md">
+          <q-card-section class="flex justify-between">
+            <div class="text-h6">Урок №{{testIndex+1}}</div>
+            <q-btn flat icon="close" color="primary" v-close-popup />
           </q-card-section>
 
           <q-card-section class="q-pt-none">
-            {material.text} <span> это передать через функцию</span>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus sit voluptate voluptas eveniet porro. Rerum blanditiis perferendis totam, ea at omnis vel numquam exercitationem aut, natus minima, porro labore.
+            <p>
+              {{materials[testIndex].text}}
+            </p>
           </q-card-section>
 
-          <q-card-actions align="right">
-            <q-btn flat label="Перейти к тесту (сделать через кнопку функцию котрая передавала бы данные о тесте)" @click="$router.push(`/testPage?materialNumber=${testIndex}`)"  color="primary" v-close-popup />
-            <q-btn flat label="OK" color="primary" v-close-popup />
+          <q-card-actions align="between">
+            <q-btn flat icon="favorite_border" :color="materials[testIndex].isFavorite ? 'red':'primary'" @click="changeFavoriteMaterial(testIndex)" />
+            <q-btn flat label="Перейти к тесту" @click="$router.push(`/testPage?materialNumber=${testIndex}`)"  color="primary"/>
           </q-card-actions>
         </q-card>
       </q-dialog>
@@ -79,6 +85,268 @@
 <script>
 const materials =  [
     {
+      "subject": "Пассивный залог",
+      "level": "B1",
+      "isFinished": false,
+      "favourite": false,
+      "text": "Пассивный залог (Passive Voice) – это грамматическая конструкция, которая показывает, что подлежащее (кто? что?) не совершает действие самостоятельно, а испытывает действие на себе, является объектом действия. Тот (то), над кем (чем) совершается действие, называется passive subject.",
+      "tests": [
+        {
+          "isFinished": false,
+          "nameOfTest": "Пассивный залог",
+          "questions":[
+            {
+              question: "He was elected ___ President many years ago.",
+              answers:  ['the','a','-'],
+              correctAnswer: 1
+            },
+            {
+              question: "She adores being ___.",
+              answers:  ['looked','look at','looked at'],
+              correctAnswer: 2
+            },
+            {
+              question: "Nobody listens to me. Это то же самое, что и ...",
+              answers:  ['I never listened to','I am never listened to','I am never listened'],
+              correctAnswer: 3
+            },
+            {
+              question: "I’m surprised she ___ the job.",
+              answers:  ["wasn't offered","didn't get offered",'Оба варианты возможны'],
+              correctAnswer: 2
+            },
+
+            {
+              question: "Выберите продолжение для следующей реплики: My car is gone!",
+              answers:  ["It had been stolen","It has been stolen",'It will be stolen'],
+              correctAnswer: 1
+            },
+
+            {
+              question: "He has always ___ as a sort of clown.",
+              answers:  ["be seen","been seen",'was seen'],
+              correctAnswer: 3
+            },
+            {
+              question: "___ adverbs ___ between the verb and the object?",
+              answers:  ["Can, put","Can be, put",'Can, be put'],
+              correctAnswer: 2
+            },
+
+
+          ]
+        }
+      ]
+    },
+    {
+      "subject": "Глаголы",
+      "level": "B2",
+      "isFinished": false,
+      "favourite": false,
+      "text": "Глагол (Verb) – это самостоятельная часть речи, которая выражает действие предмета или лица или их состояние. Глаголы отвечают на вопрос «что делать?», «что сделать?».\n" +
+        "\n" +
+        "Глаголы английского языка изменяются в зависимости от лица (I, You, He и др.), числа (единственное или множественное), времени в предложении. Глаголы имеют пассивный и активный залог, наклонение и четыре аспекта (неопределенный, длительный, совершенный и совершенно-длительный). Различают также переходные и непереходные глаголы.",
+      "tests": [
+        {
+          "isFinished": false,
+          "nameOfTest": "Выберите глагол",
+          "questions":[
+            {
+              question: "He usually _______ breakfast at 7 am.",
+              answers:  ['eat','eating','ate', 'eats'],
+              correctAnswer: 1
+            },
+            {
+              question: "They _______ a movie right now.",
+              answers:  ['watch','watching','watched', 'watches'],
+              correctAnswer: 2
+            },
+            {
+              question: "We _______ to the beach last weekend.",
+              answers:  ['go','going','went', 'goes'],
+              correctAnswer: 3
+            },
+            {
+              question: "She _______ TV when the power went out.",
+              answers:  ['watch','watching','watched', 'was watching'],
+              correctAnswer: 4
+            },
+            {
+              question: "I _______ to Paris next month.",
+              answers:  ['go','going','went', 'will go'],
+              correctAnswer: 4
+            },
+            {
+              question: "They _______ a party on Saturday evening.",
+              answers:  ['plan','planning','planned', 'will be planning'],
+              correctAnswer: 4
+            },
+            {
+              question: "Choose the correct verb form in the present perfect tense:",
+              correctAnswer: 4,
+              answers:  ['read','reading','reads', 'has read']
+            },
+            {
+              question: "They _______ dinner before the guests arrived.",
+              answers:  ['eat','eating',' had eaten', 'ate'],
+              correctAnswer: 3
+            },
+            {
+              question: "By next year, I _______ the language.",
+              answers:  ['learn','will learn',' learning', 'would learn'],
+              correctAnswer: 2
+            },
+            {
+              question: "We _______ for six hours.",
+              answers:  ['study','studying','studied', 'have been studying'],
+              correctAnswer: 4
+            },
+          ]
+        }
+      ]
+    },
+    {
+    "subject": "Прилагательные",
+    "level": "B2",
+    "isFinished": false,
+    "favourite": false,
+    "text":" Прилагательное (Adjective) – это самостоятельная часть речи, которая указывает на признак лица, предмета или понятия и отвечает на вопрос «какой?». В английском языке они не имеют категории рода и числа, поэтому не меняют своей формы. Прилагательные чаще всего используются с существительными и в предложениях выступают определением или именной частью составного сказуемого.",
+    "tests": [
+      {
+        "isFinished": false,
+        "nameOfTest": "Выберите подходящее прилагательное:",
+        "questions":[
+          {
+            question: "Their flat is … than ours",
+            answers:  ['the larger','larger','more large', 'more larger'],
+            correctAnswer: 1
+          },
+          {
+            question: "You are … person that I know.",
+            answers:  ['luckyer','lucky','the luckyest', 'the luckiest'],
+            correctAnswer: 2
+          },
+          {
+            question: "The situation is … than I thought",
+            answers:  ['more bad','worse','badder', 'badass'],
+            correctAnswer: 3
+          },
+          {
+            question: "Today the weather is … than yesterday",
+            answers:  ['much nicer','niceer','more nicer', 'nice'],
+            correctAnswer: 4
+          },
+          {
+            question: "This car is … of all.",
+            answers:  ['a less expensive','an expensive','the least expensive', 'the little expensive'],
+            correctAnswer: 4
+          },
+          {
+            question: "The new teacher is … than the previous one..",
+            answers:  ['a lot of good','many better','many good', 'a lot better'],
+            correctAnswer: 4
+          },
+          {
+            question: "This room is not so … as that one on the first floor.",
+            correctAnswer: 4,
+            answers:  ['comfortable','more comfortable','the most comfortable', 'the most comfortabler']
+          },
+          {
+            question: "The more you learn … you become.",
+            answers:  ['smarter','the smartest',' the smarter', 'smart'],
+            correctAnswer: 3
+          },
+          {
+            question: "We left … way possible",
+            answers:  ['the quickest','a quick',' the quickiest', 'a quicker'],
+            correctAnswer: 2
+          },
+          {
+            question: "What sea is … The Black or the Red?",
+            answers:  ['little saltier','less salty','less saltier', 'salty'],
+            correctAnswer: 4
+          },
+        ]
+      }
+    ]
+  },
+    {
+      "subject": "times",
+      "level": "B1",
+      "isFinished": false,
+      "favourite": false,
+      "text": "some random text maybe Lorem Ipulum",
+      "tests": [
+        {
+          "nameOfTest": "times test",
+          "questions": [
+            {
+              "questionText": "Не ЛУчший ЯП?",
+              "answers":  ["Java","JavaScript","Huskell", "Python"],
+              "correctAnswer": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "subject": "verbs",
+      "level": "C2",
+      "isFinished": true,
+      "favourite": false,
+      "text": "some random text maybe Lorem Ipulum",
+      "tests": [
+        {
+          "nameOfTest": "verbs test",
+          "questions": [
+            {
+              "questionText": "Не ЛУчший ЯП?",
+              "answers":  ["Java","JavaScript","Huskell", "Python"],
+              "correctAnswer": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "subject": "times",
+      "level": "B2",
+      "isFinished": true,
+      "favourite": false,
+      "text": "some random text maybe Lorem Ipulum",
+      "tests": [
+        {
+          "nameOfTest": "grammar test",
+          "questions": [
+            {
+              "questionText": "Не ЛУчший ЯП?",
+              "answers":  ["Java","JavaScript","Huskell", "Python"],
+              "correctAnswer": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "subject": "grammar",
+      "level": "A1",
+      "isFinished": false,
+      "favourite": false,
+      "text": "some random text maybe Lorem Ipulum",
+      "tests": [
+        {
+          "nameOfTest": "grammar test",
+          "questions": [
+            {
+              "questionText": "Не ЛУчший ЯП?",
+              "answers":  ["Java","JavaScript","Huskell", "Python"],
+              "correctAnswer": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
       "subject": "grammar",
       "level": "A1",
       "isFinished": true,
@@ -86,166 +354,55 @@ const materials =  [
       "text": "some random text maybe Lorem Ipulum",
       "tests": [
         {
-          "isFinished": false,
-          "nameOfTest": "times test",
-          "questions":[
+          "nameOfTest": "grammar test",
+          "questions": [
             {
-              question: "ЛУчший ЯП?",
-              answers:  ['Java','JavaScript','Mocha', 'Python'],
-              correctAnswer:  1
-            },
-            {
-              question: "Не ЛУчший ЯП?",
-              answers:  ['Java','JavaScript','Huskell', 'Python'],
-              correctAnswer: 3
-            },
-            {
-              question: "Возможно ЛУчший ЯП?",
-              answers:  ['Java','Pascal','Mocha', 'Python'],
-              correctAnswer: 2
-            },
-            {
-              question: "Явно не лучший ЛУчший ЯП?",
-              answers:  ['С++','JavaScript','Mocha', 'Python'],
-              correctAnswer: 4
+              "questionText": "Не ЛУчший ЯП?",
+              "answers":  ["Java","JavaScript","Huskell", "Python"],
+              "correctAnswer": 3
             }
           ]
         }
       ]
     },
-    // {
-    //   "subject": "times",
-    //   "level": "B1",
-    //   "isFinished": false,
-    //   "favourite": false,
-    //   "text": "some random text maybe Lorem Ipulum",
-    //   "test": [
-    //     {
-    //       "nameOfTest": "times test",
-    //       "questions": [
-    //         {
-    //           "questionText": "Не ЛУчший ЯП?",
-    //           "answers":  ["Java","JavaScript","Huskell", "Python"],
-    //           "correctAnswer": 3
-    //         }
-    //       ]
-    //     }
-    //   ]
-    // },
-    // {
-    //   "subject": "verbs",
-    //   "level": "C2",
-    //   "isFinished": true,
-    //   "favourite": false,
-    //   "text": "some random text maybe Lorem Ipulum",
-    //   "test": [
-    //     {
-    //       "nameOfTest": "verbs test",
-    //       "questions": [
-    //         {
-    //           "questionText": "Не ЛУчший ЯП?",
-    //           "answers":  ["Java","JavaScript","Huskell", "Python"],
-    //           "correctAnswer": 3
-    //         }
-    //       ]
-    //     }
-    //   ]
-    // },
-    // {
-    //   "subject": "times",
-    //   "level": "B2",
-    //   "isFinished": true,
-    //   "favourite": false,
-    //   "text": "some random text maybe Lorem Ipulum",
-    //   "test": [
-    //     {
-    //       "nameOfTest": "grammar test",
-    //       "questions": [
-    //         {
-    //           "questionText": "Не ЛУчший ЯП?",
-    //           "answers":  ["Java","JavaScript","Huskell", "Python"],
-    //           "correctAnswer": 3
-    //         }
-    //       ]
-    //     }
-    //   ]
-    // },
-    // {
-    //   "subject": "grammar",
-    //   "level": "A1",
-    //   "isFinished": false,
-    //   "favourite": false,
-    //   "text": "some random text maybe Lorem Ipulum",
-    //   "test": [
-    //     {
-    //       "nameOfTest": "grammar test",
-    //       "questions": [
-    //         {
-    //           "questionText": "Не ЛУчший ЯП?",
-    //           "answers":  ["Java","JavaScript","Huskell", "Python"],
-    //           "correctAnswer": 3
-    //         }
-    //       ]
-    //     }
-    //   ]
-    // },
-    // {
-    //   "subject": "grammar",
-    //   "level": "A1",
-    //   "isFinished": true,
-    //   "favourite": false,
-    //   "text": "some random text maybe Lorem Ipulum",
-    //   "test": [
-    //     {
-    //       "nameOfTest": "grammar test",
-    //       "questions": [
-    //         {
-    //           "questionText": "Не ЛУчший ЯП?",
-    //           "answers":  ["Java","JavaScript","Huskell", "Python"],
-    //           "correctAnswer": 3
-    //         }
-    //       ]
-    //     }
-    //   ]
-    // },
-    // {
-    //   "subject": "grammar",
-    //   "level": "A1",
-    //   "isFinished": true,
-    //   "favourite": false,
-    //   "text": "some random text maybe Lorem Ipulum",
-    //   "test": [
-    //     {
-    //       "nameOfTest": "grammar test",
-    //       "questions": [
-    //         {
-    //           "questionText": "Не ЛУчший ЯП?",
-    //           "answers":  ["Java","JavaScript","Huskell", "Python"],
-    //           "correctAnswer": 3
-    //         }
-    //       ]
-    //     }
-    //   ]
-    // },
-    // {
-    //   "subject": "grammar",
-    //   "level": "A1",
-    //   "isFinished": true,
-    //   "favourite": false,
-    //   "text": "some random text maybe Lorem Ipulum",
-    //   "test": [
-    //     {
-    //       "nameOfTest": "grammar test",
-    //       "questions": [
-    //         {
-    //           "questionText": "Не ЛУчший ЯП?",
-    //           "answers":  ["Java","JavaScript","Huskell", "Python"],
-    //           "correctAnswer": 3
-    //         }
-    //       ]
-    //     }
-    //   ]
-    // }
+    {
+      "subject": "grammar",
+      "level": "A1",
+      "isFinished": true,
+      "favourite": false,
+      "text": "some random text maybe Lorem Ipulum",
+      "tests": [
+        {
+          "nameOfTest": "grammar test",
+          "questions": [
+            {
+              "questionText": "Не ЛУчший ЯП?",
+              "answers":  ["Java","JavaScript","Huskell", "Python"],
+              "correctAnswer": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "subject": "grammar",
+      "level": "A1",
+      "isFinished": true,
+      "favourite": false,
+      "text": "some random text maybe Lorem Ipulum",
+      "tests": [
+        {
+          "nameOfTest": "grammar test",
+          "questions": [
+            {
+              "questionText": "Не ЛУчший ЯП?",
+              "answers":  ["Java","JavaScript","Huskell", "Python"],
+              "correctAnswer": 3
+            }
+          ]
+        }
+      ]
+    }
   ]
 
 
@@ -255,7 +412,7 @@ export default defineComponent({
   components: {},
   data(){
     return {
-       progress:0.3,
+       progress: 0,
        openDialogTest: false,
        materials: null,
        initMaterials: materials,
@@ -263,6 +420,9 @@ export default defineComponent({
     }
   },
   methods:{
+    changeFavoriteMaterial(n){
+      this.materials[n].isFavorite = !this.materials[n].isFavorite
+    },
     openDialog(n){
       this.openDialogTest = true
       this.testIndex = n

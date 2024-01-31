@@ -1,88 +1,98 @@
 <template>
-    <div class="q-mt-xl q-px-xs">
-
-
+    <div class="q-mt-xl q-px-md" style="min-height: 700px">
+      <h6 class="q-my-none q-mb-md">Избранное</h6>
         <q-tabs
             v-model="tab"
             dense
             align="left"
-            class="bg-primary text-white shadow-2 rounded-borders"
-            style="max-width: fit-content"
+            class="bg-primary text-white shadow-2"
+            style="max-width: fit-content; border-radius: 25px 25px 0 0"
             :breakpoint="0"
         >
-          <q-tab class="q-px-xl q-px-md q-py-sm" name="tests">Тесты</q-tab>
+<!--          <q-tab class="q-px-xl q-px-md q-py-sm" name="tests">Тесты</q-tab>-->
           <q-tab class="q-px-xl q-px-md q-py-sm" name="materials">Уроки</q-tab>
         </q-tabs>
 
-        <q-tab-panels  class="rounded-borders" swipeable v-model="tab" animated>
-          <q-tab-panel name="tests">
-            <div class="q-mt-md" >
-              <q-scroll-area style="height: 500px;">
-                <q-list bordered separator>
-                  <q-item
-                      v-for="n in 10"
-                      :key="n"
-                      clickable
-                      v-ripple
-                      class="rounded-borders q-py-lg"
-                  >
-                    <q-item-section>
-                      <div class="q-mb-xs">
-                        Название теста №{{n}}
-                      </div>
-                      <div>
-                        Тема
-                      </div>
-                    </q-item-section>
+        <q-tab-panels  swipeable v-model="tab" animated>
 
-                    <q-item-section class="text-center">
-                      <div class="q-mb-xs">
-                        А{{n}}
-                      </div>
-                      <div>
-                        <q-icon :color="n%2 ==0 ? 'positive':'negative'" name="quiz" size="25px"/>
-                      </div>
-                    </q-item-section>
-                  </q-item>
-                </q-list>
-              </q-scroll-area>
-            </div>
+<!--          <q-tab-panel class="q-pa-none" name="tests">-->
+<!--            <q-scroll-area style="height: 600px;">-->
+<!--              <q-list separator>-->
+<!--                <q-item-->
+<!--                  v-for="(test) in tests"-->
+<!--                  :key="test.subject"-->
+<!--                  clickable-->
+<!--                  v-ripple-->
+<!--                  class="rounded-borders q-py-xs q-mb-md bg-white"-->
+<!--                  @click="$router.push('/')"-->
+<!--                >-->
+<!--                  <q-item-section>-->
+<!--                    <div class="row items-center">-->
+<!--                      <div class="col-10">-->
+<!--                        <div class="q-mb-xs">-->
+<!--                          Название: {{ test.nameOfTest.length > 19 ? test.nameOfTest.slice(0,19) + '...' : test.nameOfTest  }}-->
+<!--                        </div>-->
+<!--                        <div>-->
+<!--                          Тема: {{ test.subjectOfTest }}-->
+<!--                        </div>-->
+<!--                      </div>-->
 
+<!--                      <div class="col-2">-->
+<!--                        <div class="q-mb-xs">-->
+<!--                          {{ test.level }}-->
+<!--                        </div>-->
+<!--                        <div>-->
+<!--                          <q-icon :color="test.isFinished ? 'positive':'negative'" name="quiz" size="25px"/>-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </q-item-section>-->
+<!--                </q-item>-->
+<!--              </q-list>-->
+<!--            </q-scroll-area>-->
+<!--          </q-tab-panel>-->
+
+          <q-tab-panel class="q-pa-none" name="materials">
+            <q-scroll-area class="q-pa-md"  style="height: 600px;">
+              <q-list v-if="favoriteMaterials.length > 0" separator>
+
+                <q-item
+                  v-for="(material, index) in favoriteMaterials"
+                  :key="material.subject"
+                  clickable
+                  v-ripple
+                  class="q-py-xs q-mb-md bg-white"
+                >
+                  <q-item-section class="">
+                    <div class="row items-center">
+
+                      <div class="col-7">
+                        <div class="q-mb-xs">
+                          Название урока №{{index+1}}
+                        </div>
+                        <div>
+                          Тема: {{ material.subject }}
+                        </div>
+                      </div>
+
+                      <div class="col-5">
+                        <q-btn icon-right="favorite_border" label="Удалить" flat color="pink" @click="deleteFromFavorites(material.subject, index)" />
+                      </div>
+
+                    </div>
+                  </q-item-section>
+                </q-item>
+
+                <q-separator/>
+
+              </q-list>
+              <p v-if="favoriteMaterials.length === 0 ">
+                Вы&nbsp;еще не&nbsp;добавили ни&nbsp;одного урока в&nbsp;избранное. <br>
+                Чтобы сделать это перейдите в&nbsp;урок и&nbsp;нажмите&nbsp;на <q-icon name="favorite_border" color="pink" size="25px"/>
+              </p>
+            </q-scroll-area>
           </q-tab-panel>
 
-          <q-tab-panel name="materials">
-            <div class="q-mt-md" >
-              <q-scroll-area style="height: 500px">
-                <q-list bordered separator>
-                  <q-item
-                      v-for="n in 10"
-                      :key="n"
-                      clickable
-                      v-ripple
-                      class="rounded-borders q-py-lg"
-                  >
-                    <q-item-section>
-                      <div class="q-mb-xs">
-                        Название урока №{{n}}
-                      </div>
-                      <div>
-                        Тема
-                      </div>
-                    </q-item-section>
-
-                    <q-item-section class="text-center">
-                      <div class="q-mb-xs">
-                        А{{n}}
-                      </div>
-                      <div>
-                        <q-icon :color="n%2 ==0 ? 'positive':'negative'" name="quiz" size="25px"/>
-                      </div>
-                    </q-item-section>
-                  </q-item>
-                </q-list>
-              </q-scroll-area>
-            </div>
-          </q-tab-panel>
         </q-tab-panels>
     </div>
 </template>
@@ -94,7 +104,76 @@ export default defineComponent({
   name: 'FavouritesPage',
   data(){
     return{
-      tab: 'tests',
+      tab: 'materials',
+      materials:null,
+      favoriteMaterials:[],
+      tests:[],
+
+    }
+  },
+  methods:{
+    deleteFromFavorites(subject, index){
+      for (let material of this.materials) {
+        if(material.subject === subject){
+          material.isFavorite = false
+        }
+      }
+      this.favoriteMaterials.splice(index,1)
+
+    },
+    async getMaterials() {
+      // const response = await fetch('src/api.json')
+      // const data = await response.json();
+      // this.materials = data.materials
+
+      if(!localStorage.getItem('materials')){
+        console.log('no materials in local storage')
+        localStorage.setItem("materials", JSON.stringify(this.initMaterials));
+        this.materials = this.initMaterials
+      }
+      else {
+        console.log('materials in local storage')
+        this.materials = JSON.parse(localStorage.getItem('materials'))
+      }
+
+      for (let material of this.materials) {
+        this.progress += material.isFinished ? 1 : 0
+      }
+      this.progress = (this.progress / 10).toFixed(1)
+
+    }
+  },
+  watch: {
+    materials:{
+      handler(val, newVal) {
+        console.log('materials setted by watcher local storage')
+        localStorage.setItem("materials", JSON.stringify(val));
+      },
+      deep: true
+    },
+  },
+  created() {
+    this.getMaterials()
+
+    for (let index of this.materials) {
+      console.log(index.tests, 'test')
+      const test = {
+        'nameOfTest': index.tests[0].nameOfTest,
+        'isFinished': index.tests[0].isFinished,
+        'subjectOfTest': index.subject,
+        'level': index.level
+      }
+      if(index.tests[0].isFinished) {
+        this.progress+=1
+      }
+      this.progress = (this.progress / 10).toFixed(1)
+      this.tests.push(test)
+    }
+
+    for( let index of this.materials) {
+      if(index.isFavorite){
+        this.favoriteMaterials.push(index)
+      }
     }
   }
 })

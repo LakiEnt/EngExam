@@ -1,30 +1,50 @@
 <template>
-  <div class="flex flex-center column q-mt-xl">
+  <div class="flex flex-center column" style="min-height:700px ">
 <!--    привязать numberQuestion.value  к q-tab-panel чтобы была красивая анимация  свайпа -->
-    <h5> Название теста: {{ this.materials[this.numberMaterial].tests[0].nameOfTest}}</h5>
+    <q-card v-if="!showFinalResult" class="q-pa-md" style="min-width: 340px">
 
-    <div v-if="!showFinalResult">
-      <div>
-        {{questions[numberQuestion].question}}
-      </div>
-      <div class="flex column">
-        <q-radio
-          v-model="answerQuestion"
-          v-for="(answer,index) in questions[numberQuestion].answers"
-          :key="answer"
-          :val="index"
-          :label="answer"
-        />
-      </div>
+      <q-card-section>
+        <p class="text-weight-bold"> {{ this.materials[this.numberMaterial].tests[0].nameOfTest}}</p>
+      </q-card-section>
 
-      <div class="q-mt-md">Вопрос {{numberQuestion + 1}} из {{questions[numberQuestion].answers.length}}</div>
+      <q-separator/>
 
-      <q-btn class="q-mt-xl" label="Ответить" @click="incrementNumberTest"/>
-    </div>
+      <q-card-section>
+          <div>
+            {{questions[numberQuestion].question}}
+          </div>
+          <div class="flex column">
+            <q-radio
+              v-model="answerQuestion"
+              v-for="(answer,index) in questions[numberQuestion].answers"
+              :key="answer"
+              :val="index"
+              :label="answer"
+            />
+          </div>
 
-    <div v-if="showFinalResult">
-      Ваш результат: {{rightAnswers}} / {{questions.length}}
-    </div>
+          <div class="q-mt-md">Вопрос {{numberQuestion + 1}} из {{questions.length}}</div>
+      </q-card-section>
+
+      <q-separator class="q-my-md" />
+
+      <q-card-actions >
+        <q-btn class="bg-primary text-white text-weight-bold full-width" label="Ответить" @click="incrementNumberTest"/>
+      </q-card-actions>
+    </q-card>
+
+    <q-card v-if="showFinalResult" class="q-pa-md text-weight-bold" style="min-width: 340px">
+       <q-card-section>
+        <div :class="`flex column text-${colorOfResult}`">
+          Ваш результат: {{rightAnswers}} / {{questions.length}}
+        </div>
+      </q-card-section>
+
+      <q-card-actions class="q-mt-md">
+        <q-btn class="bg-primary text-white text-weight-bold full-width" label="Перейти к главному меню" @click="$router.push('/')"/>
+      </q-card-actions>
+    </q-card>
+
   </div>
 
 </template>
@@ -80,7 +100,9 @@ export default defineComponent({
       if(this.numberQuestion === this.questions.length){
         this.showFinalResult = true
       }
-
+      if(this.rightAnswers === this.questions.length){
+        this.materials[this.numberMaterial].tests[0].isFinished = true
+      }
     },
     async getMaterials() {
       // const response = await fetch('src/api.json')
@@ -112,6 +134,19 @@ export default defineComponent({
       },
       deep: true
     },
+  },
+  computed:{
+    colorOfResult(){
+      if((this.rightAnswers / this.questions.length) > 0.7) {
+        return 'positive'
+      }
+      else if((this.rightAnswers / this.questions.length) > 0.4) {
+        return 'warning'
+      }
+      else {
+        return 'negative'
+      }
+    }
   },
   created() {
     this.getMaterials()
