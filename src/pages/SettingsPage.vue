@@ -57,17 +57,17 @@
             <q-radio v-model="language" val="eng" label="English"/>
             <q-radio v-model="language" val="kz" label="Қазақ"/>
             <q-radio v-model="language" val="ch" label="中國人"/>
-
-<!--            <q-chip-->
-<!--              size="18px"-->
-<!--              selected-->
-<!--              color="primary"-->
-<!--              text-color="white"-->
-<!--              label="Русский"-->
-<!--            />-->
-
           </div>
         </q-item>
+
+        <q-separator class="q-my-md"/>
+
+        <q-item class="flex column justify-start">
+          <div class="q-mb-lg">
+            {{ localization.settingsPage.chooseTestBehavior}}: <q-toggle v-model="testBehavior"/>
+          </div>
+        </q-item>
+
       </q-list>
     </div>
 
@@ -135,6 +135,7 @@ const localization = {
       chooseColorText:'Цвет главной темы',
       chooseFontSize:'Размер шрифта',
       chooseLanguage:'Выбор языка',
+      chooseTestBehavior:'Нажимать на кнопку подтвердить чтобы перейти к следущему вопросу'
     }
   },
   eng:{
@@ -195,6 +196,8 @@ const localization = {
       chooseColorText:'Main theme color',
       chooseFontSize:'Font size',
       chooseLanguage:'Language selection',
+      chooseTestBehavior:'Выбери поведение теста (поменять текст)'
+
     }
   },
 }
@@ -202,6 +205,7 @@ export default {
   name: "SettingsPage",
   data(){
     return{
+      testBehavior: false,
       hex: '#FF00FF',
       font:'16px',
       palette: ['#009999', '#D9B801', '#E8045A', '#B2028A'],
@@ -246,8 +250,12 @@ export default {
         localStorage.setItem("language", val);
         localStorage.setItem("localization", JSON.stringify(localization[val]));
       },
-      deep: true
     },
+    testBehavior: {
+      handler(val, newVal) {
+        localStorage.setItem("testBehavior", val)
+      }
+    }
   },
   created() {
     if(localStorage.getItem("color")) {
