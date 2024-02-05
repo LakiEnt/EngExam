@@ -18,25 +18,25 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-    >
-      <q-list>
-        <q-item-label
-          header
-        >
-          Меню
-        </q-item-label>
+<!--    <q-drawer-->
+<!--      v-model="leftDrawerOpen"-->
+<!--      show-if-above-->
+<!--      bordered-->
+<!--    >-->
+<!--      <q-list>-->
+<!--        <q-item-label-->
+<!--          header-->
+<!--        >-->
+<!--          Меню-->
+<!--        </q-item-label>-->
 
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
-    </q-drawer>
+<!--        <EssentialLink-->
+<!--          v-for="link in essentialLinks"-->
+<!--          :key="link.title"-->
+<!--          v-bind="link"-->
+<!--        />-->
+<!--      </q-list>-->
+<!--    </q-drawer>-->
 
     <q-page-container class="bg-grey-3">
       <router-view />
@@ -58,7 +58,7 @@ import EssentialLink from 'components/EssentialLink.vue'
 export default defineComponent({
   name: 'MainLayout',
   components: {
-    EssentialLink
+    // EssentialLink
   },
   data() {
     return {
