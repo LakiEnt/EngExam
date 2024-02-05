@@ -2,7 +2,7 @@
   <q-page class="flex flex-center">
     <div class=" q-pb-xl full-width flex column justify-center">
       <div class="bg-primary q-mx-md q-pa-lg rounded-borders" >
-        <p class="text-white">Пройденные материалы: </p>
+        <p class="text-white">{{localization.materialsPage.title}}: </p>
 
         <q-linear-progress
             :value="progress"
@@ -32,10 +32,10 @@
               <div class="row items-center">
                 <div class="col-10">
                   <div class="q-mb-xs">
-                    Название урока №{{index+1}}
+                    {{ localization.materialsPage.lesson.nameLesson }} №{{index+1}}
                   </div>
                   <div>
-                    Тема: {{ material.subject }}
+                    {{ localization.materialsPage.lesson.subject }}: {{ material.subject }}
                   </div>
                 </div>
 
@@ -59,7 +59,7 @@
       <q-dialog v-model="openDialogTest">
         <q-card class="q-pa-md">
           <q-card-section class="flex justify-between">
-            <div class="text-h6">Урок №{{testIndex+1}}</div>
+            <div class="text-h6">{{ localization.materialsPage.lesson.nameLesson }} №{{testIndex+1}}</div>
             <q-btn flat icon="close" color="primary" v-close-popup />
           </q-card-section>
 
@@ -71,7 +71,7 @@
 
           <q-card-actions align="between">
             <q-btn flat icon="favorite_border" :color="materials[testIndex].isFavorite ? 'red':'primary'" @click="changeFavoriteMaterial(testIndex)" />
-            <q-btn flat label="Перейти к тесту" @click="$router.push(`/testPage?materialNumber=${testIndex}`)"  color="primary"/>
+            <q-btn flat :label="localization.materialsPage.getToTestBtnText" @click="$router.push(`/testPage?materialNumber=${testIndex}`)"  color="primary"/>
           </q-card-actions>
         </q-card>
       </q-dialog>
@@ -405,7 +405,68 @@ const materials =  [
     }
   ]
 
-
+const localization = {
+  rus:{
+    nav: {
+      materials: {
+        text:'Материалы',
+        description:'Уроки для изучения'
+      },
+      tests: {
+        text: 'Тесты',
+        description: 'Выбрать тест'
+      },
+      favourite: {
+        text: 'Любимое',
+        description: 'Ваши сохраненные тесты или уроки',
+      },
+      settings: {
+        text:'Настройки',
+        description:'Настройте шрифт или цвет приложения'
+      },
+    },
+    materialsPage: {
+      title: 'Пройденные материалы',
+      lesson: {
+        nameLesson:'Название урока',
+        subject:'Тема',
+      },
+      getToTestBtnText:'Перейти к тесту'
+    },
+    testsPage: {
+      title: 'Пройденные тесты',
+      toRandomTestBtnText: 'Выбрать случайные тест',
+      test: {
+        testName:'Название теста',
+        subject: 'Тема'
+      }
+    },
+    testPage:{
+      btnAnswerText:'Ответить',
+      questionText:'Вопрос',
+      questionFrom: 'из',
+      result:{
+        success:'Превосходно! Ваш результат',
+        satisfactorily: 'Сомнительно, но окей. Ваш результат',
+        disappointment: 'Вы можете лучше... Ваш результат'
+      },
+      getToMainBtnText:'Перейти к главному меню'
+    },
+    favouritesPage: {
+      title:'Избранное',
+      tabs: {
+        lesson: 'Уроки',
+      },
+      textNoFavourites: "Вы еще не добавили ни одного урока в избранное.\n" + "Чтобы сделать это перейдите в урок и нажмите на "
+    },
+    settingsPage: {
+      title: 'Настройки',
+      chooseColorText:'Цвет главной темы',
+      chooseFontSize:'Размер шрифта',
+      chooseLanguage:'Выбор языка',
+    }
+  }
+}
 import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'IndexPage',
@@ -417,6 +478,7 @@ export default defineComponent({
        materials: null,
        initMaterials: materials,
        testIndex: 0,
+       localization: localization.rus
     }
   },
   methods:{
@@ -461,6 +523,13 @@ export default defineComponent({
   },
   created() {
     this.getMaterials()
+
+    if(localStorage.getItem("localization")) {
+      this.localization = JSON.parse(localStorage.getItem("localization"))
+    }
+    else {
+      localStorage.setItem("localization", JSON.stringify(localization['rus']));
+    }
   }
 })
 </script>
