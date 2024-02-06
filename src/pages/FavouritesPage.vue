@@ -1,6 +1,6 @@
 <template>
     <div class="q-mt-xl q-px-md" style="min-height: 700px">
-      <h6 class="q-my-none q-mb-md">Избранное</h6>
+      <h6 class="q-my-none q-mb-md">{{localization.favouritesPage.title}}</h6>
         <q-tabs
             v-model="tab"
             dense
@@ -10,7 +10,7 @@
             :breakpoint="0"
         >
 <!--          <q-tab class="q-px-xl q-px-md q-py-sm" name="tests">Тесты</q-tab>-->
-          <q-tab class="q-px-xl q-px-md q-py-sm" name="materials">Уроки</q-tab>
+          <q-tab class="q-px-xl q-px-md q-py-sm" name="materials">{{ localization.favouritesPage.tabs.lesson }}</q-tab>
         </q-tabs>
 
         <q-tab-panels  swipeable v-model="tab" animated>
@@ -68,10 +68,10 @@
 
                       <div class="col-7">
                         <div class="q-mb-xs">
-                          Название урока №{{index+1}}
+                          {{ localization.materialsPage.lesson.nameLesson }} №{{index+1}}
                         </div>
                         <div>
-                          Тема: {{ material.subject }}
+                          {{ localization.materialsPage.lesson.subject }}: {{ material.subject }}
                         </div>
                       </div>
 
@@ -87,8 +87,7 @@
 
               </q-list>
               <p v-if="favoriteMaterials.length === 0 ">
-                Вы&nbsp;еще не&nbsp;добавили ни&nbsp;одного урока в&nbsp;избранное. <br>
-                Чтобы сделать это перейдите в&nbsp;урок и&nbsp;нажмите&nbsp;на <q-icon name="favorite_border" color="pink" size="25px"/>
+                {{ localization.favouritesPage.textNoFavourites}}<q-icon name="favorite_border" color="pink" size="25px"/>
               </p>
             </q-scroll-area>
           </q-tab-panel>
@@ -108,6 +107,8 @@ export default defineComponent({
       materials:null,
       favoriteMaterials:[],
       tests:[],
+      localization: null,
+
 
     }
   },
@@ -175,6 +176,7 @@ export default defineComponent({
         this.favoriteMaterials.push(index)
       }
     }
+    this.localization = JSON.parse(localStorage.getItem("localization"))
   }
 })
 </script>

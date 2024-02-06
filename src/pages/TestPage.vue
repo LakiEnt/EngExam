@@ -13,7 +13,7 @@
           <div>
             {{questions[numberQuestion].question}}
           </div>
-          <div class="flex column">
+          <div v-if="!testBehavior" class="flex column">
             <q-radio
               v-model="answerQuestion"
               v-for="(answer,index) in questions[numberQuestion].answers"
@@ -22,13 +22,23 @@
               :label="answer"
             />
           </div>
+          <div v-if="testBehavior" class="flex column">
+            <q-radio
+              v-model="answerQuestion"
+              v-for="(answer,index) in questions[numberQuestion].answers"
+              :key="answer"
+              :val="index"
+              :label="answer"
+              @click="incrementNumberTest"
+            />
+          </div>
 
           <div class="q-mt-md">Вопрос {{numberQuestion + 1}} из {{questions.length}}</div>
       </q-card-section>
 
-      <q-separator class="q-my-md" />
+      <q-separator v-if="!testBehavior" class="q-my-md" />
 
-      <q-card-actions >
+      <q-card-actions v-if="!testBehavior">
         <q-btn class="bg-primary text-white text-weight-bold full-width" label="Ответить" @click="incrementNumberTest"/>
       </q-card-actions>
     </q-card>
@@ -127,6 +137,7 @@ export default defineComponent({
       numberQuestion:0,
       rightAnswers:0,
       numberMaterial:null,
+      testBehavior: false,
     }
   },
   methods: {
@@ -194,6 +205,9 @@ export default defineComponent({
     this.getMaterials()
     this.numberMaterial = this.$route.query.materialNumber
     this.questions =  this.materials[this.numberMaterial].tests[0].questions
+    if(localStorage.getItem('testBehavior')){
+      this.testBehavior = localStorage.getItem('testBehavior')
+    }
 
 
   }

@@ -3,7 +3,7 @@
     <div class="q-px-md q-pb-xl full-width flex column justify-center">
       <div class="row justify-between">
         <div class="col-12 bg-primary q-pa-lg rounded-borders">
-          <p class="text-white">Пройденные тесты: </p>
+          <p class="text-white">{{localization.testsPage.title}}: </p>
           <q-linear-progress
               :value="progress/10"
               color="white"
@@ -17,7 +17,7 @@
         </div>
 
         <div class="col-8 bg-primary rounded-borders q-pa-lg q-mt-md flex  justify-start">
-          <p class="text-white">Выбрать случайный тест: </p>
+          <p class="text-white">{{ localization.testsPage.toRandomTestBtnText }}: </p>
           <q-btn icon="arrow_forward" color="white" outline round @click="pushToRandomTest"/>
         </div>
       </div>
@@ -37,10 +37,10 @@
                 <div class="row items-center">
                   <div class="col-10">
                     <div class="q-mb-xs">
-                      Название: {{ test.nameOfTest.length > 19 ? test.nameOfTest.slice(0,19) + '...' : test.nameOfTest  }}
+                      {{ localization.testsPage.test.testName }}: {{ test.nameOfTest.length > 19 ? test.nameOfTest.slice(0,19) + '...' : test.nameOfTest  }}
                     </div>
                      <div>
-                      Тема: {{ test.subjectOfTest }}
+                       {{ localization.testsPage.test.subject }}: {{ test.subjectOfTest }}
                     </div>
                   </div>
 
@@ -74,6 +74,7 @@ export default defineComponent({
       progress: 0,
       openDialogTest: false,
       tests:[],
+      localization: null,
     }
   },
   methods:{
@@ -91,7 +92,6 @@ export default defineComponent({
       this.$router.push(`/testPage?materialNumber=${randomTestIndex}`)
     },
     async getMaterials() {
-      console.log(123)
       // const response = await fetch('src/api.json')
       // const data = await response.json();
       // this.materials = data.materials
@@ -137,6 +137,8 @@ export default defineComponent({
     this.progress = (this.progress / 10).toFixed(1)
 
     //progress test
+
+    this.localization = JSON.parse(localStorage.getItem("localization"))
   }
 
 })
