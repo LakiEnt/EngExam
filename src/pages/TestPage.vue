@@ -62,7 +62,7 @@
 import {defineComponent} from "vue";
 
 //в целом вместе с номером тест можно передавать и вопросы
-<<<<<<< HEAD
+
 const questions = [
   {
     question: "Choose the correct verb form in the present simple tense: \n He usually _______ breakfast at 7 am.",
@@ -102,7 +102,6 @@ const questions = [
     correctAnswer: 4
   }
 ]
-=======
 // const questions = [
 //   {
 //     question: "ЛУчший ЯП?",
@@ -125,7 +124,7 @@ const questions = [
 //     correctAnswer: 4
 //   }
 // ]
->>>>>>> ad330bdf91db6cb3b5885c9415abc7ce2016d963
+
 export default defineComponent({
   name: 'TestPage',
   data(){
