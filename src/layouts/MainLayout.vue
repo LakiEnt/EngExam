@@ -54,7 +54,6 @@
 <script>
 import { defineComponent, ref } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
-
 export default defineComponent({
   name: 'MainLayout',
   components: {
@@ -96,7 +95,9 @@ export default defineComponent({
   },
 
   methods: {
-    changeColorTheme(color){
+
+
+changeColorTheme(color){
       document.documentElement.style.setProperty('--q-primary', color);
       localStorage.setItem("color", color);
     },
@@ -115,19 +116,22 @@ export default defineComponent({
       this.hex = localStorage.getItem("font-size")
       this.changeFontSize(localStorage.getItem("font-size"))
     }
-    this.localization = JSON.parse(localStorage.getItem("localization"))
+    if(localStorage.getItem("localization")) {
+      this.localization = JSON.parse(localStorage.getItem("localization"))
 
-    this.essentialLinks[0].title = this.localization.nav.materials.text
-    this.essentialLinks[0].caption = this.localization.nav.materials.description
+      this.essentialLinks[0].title = this.localization.nav.materials.text
+      this.essentialLinks[0].caption = this.localization.nav.materials.description
 
-    this.essentialLinks[1].title = this.localization.nav.tests.text
-    this.essentialLinks[1].caption = this.localization.nav.tests.description
+      this.essentialLinks[1].title = this.localization.nav.tests.text
+      this.essentialLinks[1].caption = this.localization.nav.tests.description
 
-    this.essentialLinks[2].title = this.localization.nav.favourite.text
-    this.essentialLinks[2].caption = this.localization.nav.favourite.description
+      this.essentialLinks[2].title = this.localization.nav.favourite.text
+      this.essentialLinks[2].caption = this.localization.nav.favourite.description
 
-    this.essentialLinks[3].title = this.localization.nav.settings.text
-    this.essentialLinks[3].caption = this.localization.nav.settings.description
+      this.essentialLinks[3].title = this.localization.nav.settings.text
+      this.essentialLinks[3].caption = this.localization.nav.settings.description
+    }
+
 
 
   },

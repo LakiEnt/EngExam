@@ -468,6 +468,8 @@ const localization = {
   }
 }
 import { defineComponent } from 'vue'
+import {Notify} from 'quasar'
+import { PushNotifications } from '@capacitor/push-notifications';
 export default defineComponent({
   name: 'IndexPage',
   components: {},
@@ -481,9 +483,42 @@ export default defineComponent({
        localization: localization.rus
     }
   },
-  methods:{
+  methods: {
+    pushNotifications() {
+      Notify.create({
+        message: 'Урок добавлен в избранное!',
+        color: 'pink',
+        icon:'favorite_border',
+        position:'top'
+      })
+      // Проверка поддержки браузером уведомлений
+      // if (!("Notification" in window)) {
+      //   alert("This browser does not support desktop notification");
+      // }
+      //
+      // // Проверка разрешения на отправку уведомлений
+      // else if (Notification.permission === "granted") {
+      //   // Если разрешено, то создаём уведомление
+      //   let notification = new Notification("Урок добавлен в избранное!");
+      // }
+      //
+      // // В противном случае, запрашиваем разрешение
+      // else if (Notification.permission !== "denied") {
+      //   Notification.requestPermission(function (permission) {
+      //     // Если пользователь разрешил, то создаём уведомление
+      //     if (permission === "granted") {
+      //       let notification = new Notification("Урок добавлен в избранное!");
+      //     }
+      //   });
+      // }
+
+      // В конечном счёте, если пользователь отказался от получения
+      // уведомлений, то стоит уважать его выбор и не беспокоить его
+      // по этому поводу.
+    },
     changeFavoriteMaterial(n){
       this.materials[n].isFavorite = !this.materials[n].isFavorite
+      this.pushNotifications()
     },
     openDialog(n){
       this.openDialogTest = true
