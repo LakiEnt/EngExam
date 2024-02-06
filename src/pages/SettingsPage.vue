@@ -200,6 +200,68 @@ const localization = {
 
     }
   },
+  ch:{
+    nav: {
+      materials: {
+        text:'材料',
+        description:'值得學習的教訓'
+      },
+      tests: {
+          text: '測試',
+        description: '選擇測試'
+      },
+      favourite: {
+        text: '最喜歡的',
+        description: '您已儲存的測驗或課程',
+      },
+      settings: {
+        text:'設定',
+        description:'自訂應用程式的字體或顏色'
+      },
+    },
+    materialsPage: {
+      title: '涵蓋材料',
+      lesson: {
+        nameLesson:'課程標題',
+        subject:'主題',
+      },
+      getToTestBtnText:'去測試'
+    },
+    testsPage: {
+      title: '測試通過',
+      toRandomTestBtnText: '選擇隨機測試',
+      test: {
+        testName:'測試名稱',
+        subject: '主題'
+      }
+    },
+    testPage:{
+      btnAnswerText:'回答',
+      questionText:'問題',
+      questionFrom: '從',
+      result:{
+        success:'完美的！你的結果',
+        satisfactorily: '值得懷疑，但好吧。你的結果',
+        disappointment: '你可以做得更好...你的結果'
+      },
+      getToMainBtnText:'前往主選單'
+    },
+    favouritesPage: {
+      title:'收藏夾',
+      tabs: {
+        lesson: '教訓',
+      },
+      textNoFavourites: "您尚未將任何課程添加到您的收藏夾中\n" + "為此，請轉到課程並點擊"
+    },
+    settingsPage: {
+      title: '設定',
+      chooseColorText:'主題色',
+      chooseFontSize:'字體大小',
+      chooseLanguage:'語言選擇',
+      chooseTestBehavior:'點擊確認按鈕進入下一個問題'
+    }
+  },
+
 }
 export default {
   name: "SettingsPage",
