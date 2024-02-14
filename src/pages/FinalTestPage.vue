@@ -59,8 +59,9 @@
 
       <div class="flex justify-center" style="margin-bottom: 100px">
         <q-btn
+          text-color="white"
           :style="`background-color:${colorBtn}`"
-          label="Подтвердить"
+          label="Проверить / заменить на в локализации"
           @click="checkAnswers"
         />
       </div>
