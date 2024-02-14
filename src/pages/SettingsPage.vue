@@ -168,6 +168,7 @@ const localization = {
     testsPage: {
       title: 'Passed tests',
       toRandomTestBtnText: 'Go to random test',
+      toFinalTestBtnText: 'Go to final test',
       test: {
         subject: 'Subject',
         testName:'Test name'
