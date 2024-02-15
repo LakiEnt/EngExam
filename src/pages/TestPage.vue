@@ -5,7 +5,7 @@
 
       <q-card-section>
         <p class="text-weight-bold"> {{ this.materials[this.numberMaterial].tests[0].nameOfTest}}</p>
-        <p>{{displayMinutes}}:{{ displaySecond }}</p>
+        <p :style="displayMinutes < 2 ? 'color:red':false">0{{displayMinutes}}:<span v-if="displaySecond < 10">0</span>{{ displaySecond }}</p>
       </q-card-section>
 
       <q-separator/>
@@ -56,6 +56,19 @@
       </q-card-actions>
     </q-card>
 
+    <Teleport to="body">
+      <q-dialog v-model="dialogFail" persistent>
+        <q-card>
+          <q-card-section>
+            К сожалению ваше время на прхождние теста вышло!
+          </q-card-section>
+          <q-card-actions>
+            <q-btn label="Вернуться к списку тестов"/>
+            <q-btn label="Пройти ещё раз"/>
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
+    </Teleport>
   </div>
 </template>
 
@@ -138,8 +151,9 @@ export default defineComponent({
       rightAnswers:0,
       numberMaterial:null,
       testBehavior: false,
-      displaySecond: 5,
-      displayMinutes: 2,
+      dialogFail: false,
+      displaySecond: 59,
+      displayMinutes: 5,
       timer: null,
     }
   },
@@ -187,12 +201,18 @@ export default defineComponent({
     startTimer() {
       this.timer = setInterval(() => {
           this.displaySecond--
-          if(this.displaySecond === 0){
+          if(this.displaySecond === -1){
             this.displayMinutes--
-            this.displaySecond = 5
+            this.displaySecond = 59
           }
-        clearInterval(this.timer)
+        if(this.displayMinutes === 0 && this.displaySecond === 0) {
+          this.displaySecond--
+          this.dialogFail = true
+          clearInterval(this.timer)
+        }
       }, 1000)
+
+
     },
   },
   watch: {
