@@ -5,6 +5,7 @@
 
       <q-card-section>
         <p class="text-weight-bold"> {{ this.materials[this.numberMaterial].tests[0].nameOfTest}}</p>
+        <p>{{displayMinutes}}:{{ displaySecond }}</p>
       </q-card-section>
 
       <q-separator/>
@@ -137,7 +138,13 @@ export default defineComponent({
       rightAnswers:0,
       numberMaterial:null,
       testBehavior: false,
+      displaySecond: 5,
+      displayMinutes: 2,
+      timer: null,
     }
+  },
+  mounted() {
+    this.startTimer()
   },
   methods: {
     incrementNumberTest(){
@@ -176,7 +183,17 @@ export default defineComponent({
       }
       this.progress = (this.progress / 10).toFixed(1)
 
-    }
+    },
+    startTimer() {
+      this.timer = setInterval(() => {
+          this.displaySecond--
+          if(this.displaySecond === 0){
+            this.displayMinutes--
+            this.displaySecond = 5
+          }
+        clearInterval(this.timer)
+      }, 1000)
+    },
   },
   watch: {
     materials:{
@@ -186,6 +203,7 @@ export default defineComponent({
       },
       deep: true
     },
+
   },
   computed:{
     colorOfResult(){
@@ -207,8 +225,7 @@ export default defineComponent({
     if(localStorage.getItem('testBehavior')){
       this.testBehavior = localStorage.getItem('testBehavior')
     }
-
-
   }
 })
+
 </script>
