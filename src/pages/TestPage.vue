@@ -3,7 +3,7 @@
 <!--    привязать numberQuestion.value  к q-tab-panel чтобы была красивая анимация  свайпа -->
     <q-card v-if="!showFinalResult" class="q-pa-md" style="min-width: 340px">
 
-      <q-card-section>
+      <q-card-section class="flex  justify-between">
         <p class="text-weight-bold"> {{ this.materials[this.numberMaterial].tests[0].nameOfTest}}</p>
         <p :style="displayMinutes < 2 ? 'color:red':false">0{{displayMinutes}}:<span v-if="displaySecond < 10">0</span>{{ displaySecond }}</p>
       </q-card-section>
@@ -58,13 +58,13 @@
 
     <Teleport to="body">
       <q-dialog v-model="dialogFail" persistent>
-        <q-card>
-          <q-card-section>
+        <q-card class="q-pa-md">
+          <q-card-section class="q-mb-md">
             К сожалению ваше время на прхождние теста вышло!
           </q-card-section>
-          <q-card-actions>
-            <q-btn label="Вернуться к списку тестов"/>
-            <q-btn label="Пройти ещё раз"/>
+          <q-card-actions class="flex justify-between">
+            <q-btn @click="$router.push('tests')"  color="primary" class="rounded-borders" label="Вернуться к списку тестов"/>
+            <q-btn @click="$router.go()"  color="primary" class="rounded-borders" label="Пройти ещё раз"/>
           </q-card-actions>
         </q-card>
       </q-dialog>
