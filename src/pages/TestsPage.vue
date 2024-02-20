@@ -25,13 +25,17 @@
             @click="pushToRandomTest"/>
 
           <q-btn
-            v-if="this.progress === 1"
             class="bg-primary rounded-borders q-pa-md"
-            :label="localization.testsPage.toFinalTestBtnText"
+            :disable="this.progress !== 1"
             icon-right="arrow_forward"
             color="white"
             outline
-            @click="pushToFinalTest"/>
+            @click="pushToFinalTest">
+            {{localization.testsPage.toFinalTestBtnText}}
+            <q-tooltip>
+              Чтобы перейти к этому тесту необходимо пройти все тесты!
+            </q-tooltip>
+          </q-btn>
       </div>
 
       <div class="q-mt-md" >
