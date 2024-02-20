@@ -32,6 +32,7 @@
           </div>
           <div class="flex">
             <q-chip
+              disable
               size="18px"
               v-for="(fontElem, index) in fontSizes"
               :key="fontElem.name"
@@ -168,6 +169,7 @@ const localization = {
     testsPage: {
       title: 'Passed tests',
       toRandomTestBtnText: 'Go to random test',
+      toFinalTestBtnText: 'Go to final test',
       test: {
         subject: 'Subject',
         testName:'Test name'
@@ -331,6 +333,9 @@ export default {
     if(localStorage.getItem("localization")) {
       this.localization = JSON.parse(localStorage.getItem("localization"))
       this.language = localStorage.getItem("language")
+    }
+    if(localStorage.getItem("testBehavior")) {
+      this.testBehavior = JSON.parse(localStorage.getItem("testBehavior"))
     }
   }
 }

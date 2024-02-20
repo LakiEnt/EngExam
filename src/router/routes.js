@@ -8,7 +8,8 @@ const routes = [
       { path: '/tests', component: () => import('pages/TestsPage.vue') },
       { path: '/favourites', component: () => import('pages/FavouritesPage.vue')},
       { path: '/settings', component: () => import('pages/SettingsPage.vue') },
-      { path: '/testPage', component: () => import('pages/TestPage.vue') }
+      { path: '/testPage', component: () => import('pages/TestPage.vue') },
+      { path: '/finalTestPage', component: () => import('pages/FinalTestPage.vue') }
     ]
   },
 

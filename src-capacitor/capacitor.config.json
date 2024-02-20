@@ -4,7 +4,7 @@
   "webDir": "www",
   "server": {
     "androidScheme": "https",
-    "url": "http://192.168.56.1:9500"
+    "url": "http://192.168.1.95:9500"
   },
   "linuxAndroidStudioPath": "/snap/android-studio/148/bin",
   "plugins": {

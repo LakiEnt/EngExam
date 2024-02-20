@@ -5,7 +5,7 @@
         <div class="col-12 bg-primary q-pa-lg rounded-borders">
           <p class="text-white">{{localization.testsPage.title}}: </p>
           <q-linear-progress
-              :value="progress/10"
+              :value="progress"
               color="white"
               rounded
               size="md"
@@ -16,10 +16,26 @@
           </div>
         </div>
 
-        <div class="col-8 bg-primary rounded-borders q-pa-lg q-mt-md flex  justify-start">
-          <p class="text-white">{{ localization.testsPage.toRandomTestBtnText }}: </p>
-          <q-btn icon="arrow_forward" color="white" outline round @click="pushToRandomTest"/>
-        </div>
+          <q-btn
+            class="bg-primary rounded-borders q-pa-md"
+            :label="localization.testsPage.toRandomTestBtnText"
+            icon-right="arrow_forward"
+            color="white"
+            outline
+            @click="pushToRandomTest"/>
+
+          <q-btn
+            class="bg-primary rounded-borders q-pa-md"
+            :disable="this.progress !== 1"
+            icon-right="arrow_forward"
+            color="white"
+            outline
+            @click="pushToFinalTest">
+            {{localization.testsPage.toFinalTestBtnText}}
+            <q-tooltip>
+              Чтобы перейти к этому тесту необходимо пройти все тесты!
+            </q-tooltip>
+          </q-btn>
       </div>
 
       <div class="q-mt-md" >
@@ -91,6 +107,9 @@ export default defineComponent({
       const randomTestIndex = Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled);
       this.$router.push(`/testPage?materialNumber=${randomTestIndex}`)
     },
+    pushToFinalTest() {
+      this.$router.push(`/finalTestpage`)
+    },
     async getMaterials() {
       // const response = await fetch('src/api.json')
       // const data = await response.json();
@@ -121,22 +140,20 @@ export default defineComponent({
 
     //need all tests
     for (let index of this.materials) {
-      console.log(index.tests, 'test')
       const test = {
         'nameOfTest': index.tests[0].nameOfTest,
         'isFinished': index.tests[0].isFinished,
         'subjectOfTest': index.subject,
         'level': index.level
       }
-      if(index.tests[0].isFinished) {
+      if(test.isFinished) {
+        console.log(test.isFinished)
         this.progress = this.progress + 1
-        console.log(this.progress, 'indexxxxx')
       }
       this.tests.push(test)
     }
     this.progress = (this.progress / 10).toFixed(1)
 
-    //progress test
 
     this.localization = JSON.parse(localStorage.getItem("localization"))
   }

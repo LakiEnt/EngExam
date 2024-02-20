@@ -243,7 +243,7 @@ export default defineComponent({
     this.numberMaterial = this.$route.query.materialNumber
     this.questions =  this.materials[this.numberMaterial].tests[0].questions
     if(localStorage.getItem('testBehavior')){
-      this.testBehavior = localStorage.getItem('testBehavior')
+      this.testBehavior = JSON.parse(localStorage.getItem('testBehavior'))
     }
   }
 })
